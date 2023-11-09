@@ -1,4 +1,9 @@
+package webproject;
+
+
 import java.sql.*;
+import java.util.*;
+import java.util.Locale.Category;
 
 public class CreerConnexion {
 	Connection cn = null;
@@ -78,11 +83,23 @@ public class CreerConnexion {
 		return id;
 	}
 	
-	/*
-	 * public static void main(String[] args) throws SQLException { CreerConnexion
-	 * cc = new CreerConnexion(); cc.etablirConnexion();
-	 * System.out.println(cc.idLastUsers()); Compte c = new Compte("root","root",5);
-	 * cc.ajouterCompte(c); }
-	 */
+	public List<Categorie> fetchCategories() throws SQLException {
+		List<Categorie> categories = new ArrayList<>();
+		
+		
+		etablirConnexion();
+		
+		sql= "SELECT idCategorie, designation FROM categorie";
+		rs = st.executeQuery(sql);
+		
+		while(rs.next()) {
+			int idCategorie = rs.getInt("idCategorie");
+			String designation = rs.getString("designation");
+			Categorie categorie = new Categorie(idCategorie, designation);
+			categories.add(categorie);
+		}
+		return categories;
+		
+	}
 	 
 }

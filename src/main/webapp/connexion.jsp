@@ -1,67 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/style.css">
+		<meta charset="UTF-8">
 		<title>Connexion</title>
+		<link rel="stylesheet" href="css/bootstrap.min-century.css"/>
+		<link rel="stylesheet" href="css/style.css"/>
 	</head>
 	<body>
-		<header>
-			<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-			  <div class="container-fluid">
-			  	<a class="navbar-brand" href="accueil.jsp">Accueil</a>
-			    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-			      <span class="navbar-toggler-icon"></span>
-			    </button>
-			    <div class="collapse navbar-collapse" id="navbarColor01">
-			      	<div class="collapse navbar-collapse" id="navbarColor01">
-				      	<ul class="navbar-nav me-auto">
-						</ul>
-			    	</div>
-			    </div>
-			  </div>
-			</nav>
-		</header>
-		<main>
-	<%
-		String email = request.getParameter("email");
-		String pw = request.getParameter("pw");
-		if(email==null){
-			email="";
-		}
-		if(pw==null){
-			pw="";
-		}
-		if(request.getMethod().equals("POST") && email.equals("admin@admin") && pw.equals("admin")){
+	<% 
+		String login = request.getParameter("pseudo");
+		String pwd = request.getParameter("mdp");
+		if(login == null){login = "";}
+		if(pwd == null){pwd = "";}
+		
+		if(request.getMethod().equals("POST") &&
+				login.equals("admin") &&
+				pwd.equals("admin")){
 	%>
-	<h2>
-		Bienvenue <%= email%>
-	</h2>
+	<h2>Bienvenue <%= login %></h2>
 	<%
 		}
 		else {
 	%>
-			<form action="MyServlet?flag=connexion" method="POST">
-				<fieldset>
-					<div class="form-group">
-				      <label for="email" class="form-label mt-4">Email address</label>
-				      <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
-				    </div>
-				    <div class="form-group">
-				      <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
-				      <input type="password" class="form-control" id="pw" placeholder="Password" autocomplete="off" name="pw">
-				    </div>
-				    <br>
-				    <button type="submit" class="btn btn-primary">Submit</button>
-				    <button type="reset" class="btn btn-primary">Reset</button>
-				</fieldset>
-			</form>
-	<%
-		}
-	%>
-		</main>
+	<div class="mt-5 row">
+        <div class="mx-auto col-8 col-md-6 col-lg-4">
+		<form class="form-group" action="MyServlet?flag=connect" method="POST">
+			<fieldset>
+				<!-- <legend>Se connecter</legend> -->
+				<table>
+					<tr>
+						<td><label for="pseudo">Nom d'utilisateur</label></td>
+						<td><input class="form-control username" type="text" id="pseudo" name="pseudo"></td>
+					</tr>
+					<tr>
+						<td><label>Mot de passe</label></td>
+						<td><input class="form-control password" type="password" id="mdp" name="mdp"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<input type="submit" class="btn btn-primary" value="Valider">
+							<input type="reset" class="btn btn-primary" value="Annuler">
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+		</form>
+		</div>
+	</div>
+		<% } %>
 	</body>
 </html>

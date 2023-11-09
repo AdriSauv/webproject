@@ -1,3 +1,6 @@
+package webproject;
+
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -106,10 +109,12 @@ public class MyServlet extends HttpServlet {
 		}else {
 			resultat = "Échec d'inscription";
 		}
+		
 		request.setAttribute("erreurs", erreurs);
 		request.setAttribute("resultat", resultat);
-		// Redirection 
-		request.getRequestDispatcher("/inscription.jsp").forward(request, response);
+		// Redirection
+
+		request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
 		//response.sendRedirect("/inscrit.jsp");
 	}
 
@@ -151,6 +156,7 @@ public class MyServlet extends HttpServlet {
 			throw new Exception("SVP saisir un pseudo");
 		}
 	}
+	
 	private void doConnexion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("pseudo");
 		String pwd = request.getParameter("mdp");
@@ -159,11 +165,24 @@ public class MyServlet extends HttpServlet {
 			request.getRequestDispatcher("/connectionKO.jsp").forward(request, response);
 		}else {
 			if(pwd.equals(pwdBDD)) {
-				request.getRequestDispatcher("/connectionOK.jsp").forward(request, response);
+				request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/connectionKO.jsp").forward(request, response);
 			}
 		}
+	}
+	
+	public void doCategorie(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		HttpSession session = request.getSession(true);
+		
+		int idCategorie = Integer.parseInt(request.getParameter("idCategorie"));
+		String designation = request.getParameter("designation");
+		
+		
+		Categorie categorie = new Categorie(idCategorie, designation);
+		List<Categorie> categories = categorie.fetchCategories();
+		
+		request.setAttribute("listeCat", categories);
 	}
 
 }

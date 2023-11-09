@@ -1,3 +1,6 @@
+package webproject;
+
+
 public class Users {
 	private int id;
 	private String fName;

@@ -1,3 +1,5 @@
+package webproject;
+
 public class Compte {
 	private int idCompte;
 	private String login;

@@ -4,9 +4,11 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Success</title>
+		<title>Admin</title>
+		<link rel="stylesheet" href="css/bootstrap.min-century.css"/>
+		<link rel="stylesheet" href="css/style.css"/>
 	</head>
 	<body>
-		<h2>Success</h2>
+		<h2>Bonjour admin</h2>
 	</body>
 </html>
