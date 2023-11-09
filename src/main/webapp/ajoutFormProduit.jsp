@@ -56,10 +56,11 @@
 				      	<select id="categorie" name="categorie">
 				      	
 				      	<%
-				      		List<Categorie> categories = categories.fetchCategories();
+				      		Categorie cat = new Categorie();
+				      		List<Categorie> categories = cat.fetchCategories();
 				      		for ( Categorie categorie : categories){	
 				      	%>
-				      	<option value="<%= categorie.getIdCategorie()%>"><%= categorie.getDesignation() %></option>
+				      	<option value="<%= cat.getIdCategorie()%>"><%= cat.getDesignation() %></option>
 				      	<%
 				      		}
 				      	%>

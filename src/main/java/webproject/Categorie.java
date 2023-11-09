@@ -18,6 +18,11 @@ public class Categorie {
 		this.idCategorie = idCategorie;
 		this.designation = designation;
 	}
+	
+	public Categorie() {
+		super();
+		
+	}
 
 
 	public int getIdCategorie() {
@@ -31,9 +36,9 @@ public class Categorie {
 	
 	public List<Categorie> fetchCategories() throws SQLException {
 		Connection cn = null;
-		Statement st = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		Statement st = null;
 		String sql = "";
 		CreerConnexion cc = new CreerConnexion();
 		List<Categorie> categories = new ArrayList<>();
