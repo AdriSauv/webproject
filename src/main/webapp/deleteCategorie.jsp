@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List"%>
-<%@ page import="webproject.Categorie"%>
-<%@ page import="webproject.MyServlet" %>
-<%@ page import="webproject.CreerConnexion" %>
+<%@ page import="webproject.*"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Insert title here</title>
+		<title>Supprimer Catégorie</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/style.css"/>
 		
@@ -30,37 +29,24 @@
 			</nav>
 		</header>
 		<main>
-			<form method="POST" action="MyServlet?flag=ajoutP">
+			<form method="POST" action="MyServlet?flag=deleteCat">
 				<fieldset>
-					<legend>Ajout Article</legend>
-					<div class="form-group row">
-			      		<label for="designation" class="form-label mt-4">Designation</label>
-				      	<div class="col-sm-10">
-				        	<input type="text"  class="form-control" id="designation" name="designation">
-				      	</div>
-			      	</div>
+					<legend>Supprimer Categorie</legend>
 			      	<div class="form-group row">
-			      		<label for="prix" class="form-label mt-4">Prix</label>
-				      	<div class="col-sm-10">
-				        	<input type="number"  class="form-control" id="prix" name="prix">
-				      	</div>
-			      	</div>
-			      	<div class="form-group row">
-			      		<label for="qtx" class="form-label mt-4">Quantite</label>
-				      	<div class="col-sm-10">
-				        	<input type="number"  class="form-control" id="qtx" name="qtx">
-				      	</div>
-			      	</div>
-			      	<div class="form-group row">
-			      		<label for="categorie" class="form-label mt-4">Categorie</label>
-				      	<select id="categorie" name="categorie">
+			      		<label for="dltCat" class="form-label mt-4">Categorie</label>
+				      	<select id="deleteCat" name="deleteCat">
 				      	
 				      	<%
+				      		CreerConnexion cc = new CreerConnexion();
+			      			cc.etablirConnexion();
 				      		Categorie cat = new Categorie();
-				      		List<Categorie> categories = cat.fetchCategories();
-				      		for ( Categorie categorie : categories){	
+				      		List<Categorie> liste = cc.listCategorie();
+				      		cc.cloturerConnexion();
+				      		String item;
+				      		for( int i =0; i<liste.size(); i++) {
+				      			item= (String) liste.get(i).getDesignation() ;
 				      	%>
-				      	<option value="<%= cat.getIdCategorie()%>"><%= cat.getDesignation() %></option>
+				      	<option value="<%=item%>"><%=item%></option>
 				      	<%
 				      		}
 				      	%>
@@ -69,6 +55,7 @@
 			      	<br>
 			      	<input type="submit" class="btn btn-outline-success" value="Valider">
 			      	<input type="reset" class="btn btn-outline-danger" value="Reset">
+			      	<a href="menuAdmin.jsp"><input type="button" class="btn btn-primary" value="Annuler"></a>
 				</fieldset>
 			</form>
 		</main>

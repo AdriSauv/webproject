@@ -33,30 +33,4 @@ public class Categorie {
 	public String getDesignation() {
 		return designation;
 	}
-	
-	public List<Categorie> fetchCategories() throws SQLException {
-		Connection cn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Statement st = null;
-		String sql = "";
-		CreerConnexion cc = new CreerConnexion();
-		List<Categorie> categories = new ArrayList<>();
-		
-		cc.etablirConnexion();
-		
-		sql= "SELECT idCategorie, designation FROM categorie";
-		rs = st.executeQuery(sql);
-		
-		while(rs.next()) {
-			int idCategorie = rs.getInt("idCategorie");
-			String designation = rs.getString("designation");
-			Categorie categorie = new Categorie(idCategorie, designation);
-			categories.add(categorie);
-		}
-		return categories;
-		
-	}
-
-
 }

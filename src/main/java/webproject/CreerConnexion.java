@@ -3,7 +3,6 @@ package webproject;
 
 import java.sql.*;
 import java.util.*;
-import java.util.Locale.Category;
 
 public class CreerConnexion {
 	Connection cn = null;
@@ -17,7 +16,7 @@ public class CreerConnexion {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			cn = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1/prjcommerce","xyz","xyz");
-			System.out.println("Bravo!!! connexion réussie");
+			//System.out.println("Bravo!!! connexion réussie");
 			st = cn.createStatement();
 		}catch(ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -83,23 +82,128 @@ public class CreerConnexion {
 		return id;
 	}
 	
-	public List<Categorie> fetchCategories() throws SQLException {
-		List<Categorie> categories = new ArrayList<>();
-		
-		
-		etablirConnexion();
-		
-		sql= "SELECT idCategorie, designation FROM categorie";
-		rs = st.executeQuery(sql);
-		
-		while(rs.next()) {
-			int idCategorie = rs.getInt("idCategorie");
-			String designation = rs.getString("designation");
-			Categorie categorie = new Categorie(idCategorie, designation);
-			categories.add(categorie);
+	public String ajouterCategorie(String cat) {
+		String str = "";
+		if(!categorieExist(cat)) {
+			sql = "INSERT INTO categorie(designation) VALUES('" + cat + "')";
+			try {
+				etablirConnexion();
+				st.executeUpdate(sql);
+				str = "Ajout du catégorie " + cat + " réussie.";
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else {
+			str = "La catégorie " + cat + " existe déjà.";
 		}
-		return categories;
-		
+		cloturerConnexion();
+		return str;
+	}
+	public void modifierCategorie(String ancienCat, String newCat) {
+		sql = "UPDATE categorie SET designation = '" + newCat + "' WHERE designation LIKE '" + ancienCat + "'";
+			try {
+				etablirConnexion();
+				st.executeUpdate(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		cloturerConnexion();
+	}
+	public void supprimerCategorie(String cat) {
+		sql = "DELETE FROM categorie where designation LIKE '" + cat + "'";
+			try {
+				etablirConnexion();
+				st.executeUpdate(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		cloturerConnexion();
+	}
+	public List<Categorie> listCategorie() {
+		List<Categorie> l = new ArrayList<Categorie>();
+		Categorie c;
+		sql = "SELECT * FROM categorie ORDER BY designation";
+		try {
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				c = new Categorie(rs.getInt(1),rs.getString(2));
+				l.add(c);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return l;
+	}
+	
+	
+	public boolean categorieExist(String designation) {
+		etablirConnexion();
+		sql = "SELECT idCategorie FROM categorie WHERE designation LIKE '" + designation + "'";
+		try {
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				cloturerConnexion();
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cloturerConnexion();
+		return false;
+	}
+	
+	public int getIdFromCategorie(String designation) {
+		int identifiant = 0;
+		sql = "SELECT idCategorie FROM categorie WHERE designation LIKE '" + designation + "'";
+		try {
+			etablirConnexion();
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				identifiant = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cloturerConnexion();
+		return identifiant;
+	}
+	public List<Integer> categorieExistDansArticle() {
+		List<Integer> lCategorie = new ArrayList<Integer>();
+		sql = "SELECT DISTINCT(idCategorie) FROM article";
+		try {
+			etablirConnexion();
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				lCategorie.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cloturerConnexion();
+		return lCategorie;
+	}
+	
+	public boolean verifierArticleAvantSuppressionCategorie(String designation) {
+		int idCat = 0;
+		List<Integer> lst = categorieExistDansArticle();
+		sql = "SELECT idCategorie FROM categorie WHERE designation LIKE '" + designation + "'";
+		try {
+			etablirConnexion();
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				idCat = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		for(int i : lst) {
+			if(i == idCat) {
+				cloturerConnexion();
+				return true;
+			}
+		}
+		cloturerConnexion();
+		return false;
 	}
 	 
 }

@@ -11,18 +11,18 @@
 	</head>
 	<body>
 		<header>
-			<h2>Bonjour Admin </h2>
+			<h2>Bonjour ${login} </h2>
 		</header>
 		<main>
-			<div class="d-grid gap-3">
+			<div>
 				<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-				  <button type="button" class="btn btn-primary">Produit</button>
+				  <button type="button" class="btn btn-primary">Catégorie</button>
 				  <div class="btn-group" role="group">
 				    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 				    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-				      <a class="dropdown-item" href="ajoutFormProduit.jsp">Ajouter</a>
-				      <a class="dropdown-item" href="#">Modifier</a>
-				      <a class="dropdown-item" href="#">Supprimer</a>
+				      <a class="dropdown-item" href="addCategorie.jsp">Ajouter</a>
+				      <a class="dropdown-item" href="modifyCategorie.jsp">Modifier</a>
+				      <a class="dropdown-item" href="deleteCategorie.jsp">Supprimer</a>
 				    </div>
 				  </div>
 				</div>

@@ -2,8 +2,10 @@ package webproject;
 
 
 import jakarta.servlet.*;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
@@ -46,7 +48,17 @@ public class MyServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}else {
-				this.doGet(request, response);
+				if(flag.equalsIgnoreCase("addCat")) {
+					this.doAddCategorie(request,response);
+				}else {
+					if(flag.equalsIgnoreCase("modifyCat")) {
+						this.doUpdateCategorie(request,response);
+					}else {
+						if(flag.equalsIgnoreCase("deleteCat")) {
+							this.doDeleteCategorie(request,response);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -113,7 +125,7 @@ public class MyServlet extends HttpServlet {
 		request.setAttribute("erreurs", erreurs);
 		request.setAttribute("resultat", resultat);
 		// Redirection
-
+		
 		request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
 		//response.sendRedirect("/inscrit.jsp");
 	}
@@ -171,18 +183,45 @@ public class MyServlet extends HttpServlet {
 			}
 		}
 	}
-	
-	public void doCategorie(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		HttpSession session = request.getSession(true);
-		
-		int idCategorie = Integer.parseInt(request.getParameter("idCategorie"));
-		String designation = request.getParameter("designation");
-		
-		
-		Categorie categorie = new Categorie(idCategorie, designation);
-		List<Categorie> categories = categorie.fetchCategories();
-		
-		request.setAttribute("listeCat", categories);
-	}
 
+	private void doDeleteCategorie(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
+		String designation = request.getParameter("deleteCat");
+		session.setAttribute("msgSup", "");
+		if(cc.verifierArticleAvantSuppressionCategorie(designation)) {
+			session.setAttribute("msgSupCat", "Suppression impossible : catégorie " + designation + " utilisé dans Article");
+			request.getRequestDispatcher("/deleteCategorie.jsp").forward(request, response);
+		}else {
+			cc.supprimerCategorie(designation);
+			session.setAttribute("msgSup", "OK");
+			session.setAttribute("msgSupCat", "Suppression de la catégorie " + designation + " réussie");
+			request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
+		}
+	}
+	private void doAddCategorie(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		HttpSession session = request.getSession(true);
+		String designation = request.getParameter("designation");
+		String msgReponse = "";
+		if(!designation.isEmpty() && designation != null) {
+			msgReponse = cc.ajouterCategorie(designation);
+			session.setAttribute("msgReponse", msgReponse);
+			//session.setAttribute("msgAddCat", "Ajout du catégorie " + designation + " réussie");
+			request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);	
+		}else {
+			msgReponse = "Il faut préciser une catégorie à ajouter.";
+			session.setAttribute("msgReponse", msgReponse);
+			request.getRequestDispatcher("/addCategorie.jsp").forward(request, response);
+		}
+	}
+	private void doUpdateCategorie(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
+		String nvxDesignation = request.getParameter("nvxDesignation");
+		String ancienneDesignation = request.getParameter("eltSelected");
+		session.setAttribute("msgModif", "OK");
+		session.setAttribute("msgModifCat", "Modification du catégorie " + ancienneDesignation + " vers " + nvxDesignation + " réussie");
+		cc.modifierCategorie(ancienneDesignation, nvxDesignation);
+		request.getRequestDispatcher("/gererCategorie.jsp").forward(request, response);
+		
+	}
 }
