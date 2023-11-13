@@ -5,6 +5,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Ajouter Catégorie</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
 	<main>
@@ -15,6 +17,7 @@
 				    <label for="designation" class="form-label mt-4">Nom Catégorie</label>
 				    <input type="text" class="form-control" id="designation" name="designation">
 			    </div>
+			    <br>
 			    <input type="submit" class="btn btn-outline-success" value="Valider">
 		      	<input type="reset" class="btn btn-outline-danger" value="Reset">
 		      	<a href="menuAdmin.jsp"><input type="button" class="btn btn-primary" value="Annuler"></a>

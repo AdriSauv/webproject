@@ -4,6 +4,7 @@ package webproject;
 import java.sql.*;
 import java.util.*;
 
+
 public class CreerConnexion {
 	Connection cn = null;
 	Statement st = null;
@@ -134,8 +135,7 @@ public class CreerConnexion {
 		}
 		return l;
 	}
-	
-	
+
 	public boolean categorieExist(String designation) {
 		etablirConnexion();
 		sql = "SELECT idCategorie FROM categorie WHERE designation LIKE '" + designation + "'";
@@ -205,5 +205,63 @@ public class CreerConnexion {
 		cloturerConnexion();
 		return false;
 	}
-	 
+	
+	public String ajoutArticle(String designation, int pu, int qtx, int idCategorie) {
+		String str="";
+		sql = "INSERT INTO article(designation, pu, qty, idCategorie) VALUES ('" + designation + "'," + pu + "," + qtx + ", " + idCategorie + ")";
+		etablirConnexion();
+		try {
+			st.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		str="Ajout d'article" + designation + "reussie.";
+		return str;
+	}
+	public List<Article> listArticle() {
+		List<Article> l = new ArrayList<Article>();
+		Article a;
+		sql = "SELECT * FROM article ORDER BY designation";
+		try {
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				a = new Article(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+				l.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return l;
+	}
+	public void supprimerArticle(String article) {
+		sql = "DELETE FROM article where designation LIKE '" + article + "'";
+			try {
+				etablirConnexion();
+				st.executeUpdate(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		cloturerConnexion();
+	}
+	
+	public void modifierArticle(String oldDesignation, String nvxDesignation, String nvxPrix, String nvxQtx, int newCat) {
+		String prixValue = (nvxPrix.isEmpty() || nvxPrix == null) ? "pu" : nvxPrix;
+	    String qtxValue = (nvxQtx.isEmpty() || nvxQtx == null) ? "qty" : nvxQtx;
+	    String designationValue = (nvxDesignation == null || nvxDesignation.isEmpty()) ? "designation" : nvxDesignation;
+	    
+	    sql = "UPDATE article SET " +
+	            ( !"pu".equals(prixValue) ? "pu = " + prixValue : "") +
+	            ( !"qty".equals(qtxValue) ? ( !"pu".equals(prixValue) ? ", " : "") + "qty = " + qtxValue : "") +
+	            ( !"designation".equals(designationValue) ? ( (!"pu".equals(prixValue) || !"qty".equals(qtxValue)) ? ", " : "") + "designation = '" + designationValue + "'" : "") +
+	            " WHERE designation LIKE '" + oldDesignation + "';";
+	    
+				try {
+					etablirConnexion();
+					st.executeUpdate(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		cloturerConnexion();
+	}
+
 }

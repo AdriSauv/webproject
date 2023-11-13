@@ -7,26 +7,22 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Insert title here</title>
+		<title>Supprimer Article</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/style.css"/>
 	</head>
 <body>
 	<main>
-		<form action="MyServlet?flag=modifyCat" method="post">
+		<form action="MyServlet?flag=deleteArticle" method="post">
 			<fieldset>
-                <legend>Modifier catégorie</legend>
-                <label for="nvxDesignation">Nouvelle désignation :</label>
-				<input type="text" id="nvxDesignation" name="nvxDesignation" value="">
-				<br>
-				<label for="designation">Désignation :</label>
-				
-				<select name="eltSelected">
+                <legend>Supprimer Article</legend>
+				<label for="deleteArticle">Désignation :</label>
+				<select name="deleteArticle">
 				<%
 					CreerConnexion cc = new CreerConnexion();
 	      			cc.etablirConnexion();
-		      		Categorie cat = new Categorie();
-		      		List<Categorie> liste = cc.listCategorie();
+		      		Article article = new Article();
+		      		List<Article> liste = cc.listArticle();
 		      		cc.cloturerConnexion();
 		      		String item;
 					for (int i=0; i<liste.size(); i++)

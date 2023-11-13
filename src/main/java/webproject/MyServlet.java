@@ -56,6 +56,12 @@ public class MyServlet extends HttpServlet {
 					}else {
 						if(flag.equalsIgnoreCase("deleteCat")) {
 							this.doDeleteCategorie(request,response);
+						} else if(flag.equalsIgnoreCase("addArticle")){
+							this.doAddArticle(request,response);
+						} else if(flag.equalsIgnoreCase("deleteArticle")){
+							this.doDeleteArticle(request,response);
+						} else if(flag.equalsIgnoreCase("modifyArticle")){
+							this.doModifyArticle(request,response);
 						}
 					}
 				}
@@ -64,7 +70,6 @@ public class MyServlet extends HttpServlet {
 	}
 
 	private void doInscription(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-		HttpSession session = request.getSession(true);
 		
 		// sauvegarde du résultat de validation
 		String resultat;
@@ -219,9 +224,40 @@ public class MyServlet extends HttpServlet {
 		String nvxDesignation = request.getParameter("nvxDesignation");
 		String ancienneDesignation = request.getParameter("eltSelected");
 		session.setAttribute("msgModif", "OK");
-		session.setAttribute("msgModifCat", "Modification du catégorie " + ancienneDesignation + " vers " + nvxDesignation + " réussie");
+		session.setAttribute("msgModifCat", "Modification de la catégorie " + ancienneDesignation + " vers " + nvxDesignation + " réussie");
 		cc.modifierCategorie(ancienneDesignation, nvxDesignation);
-		request.getRequestDispatcher("/gererCategorie.jsp").forward(request, response);
+		request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
+		
+	}
+	private void doAddArticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String designation = request.getParameter("designation"); 
+		int pu = Integer.parseInt(request.getParameter("pu")); 
+		int qtx = Integer.parseInt(request.getParameter("qtx"));
+		int idCategorie = Integer.parseInt(request.getParameter("categorie"));
+		
+		if(!designation.isEmpty()) {
+			cc.ajoutArticle(designation,pu,qtx, idCategorie);
+			request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
+		}
+		
+	}
+	private void doDeleteArticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
+		String designation = request.getParameter("deleteArticle");
+		session.setAttribute("msgSup", "");
+		cc.supprimerArticle(designation);
+		request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
+	}
+	
+	private void doModifyArticle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nvxDesignation = request.getParameter("nvxDesignation");
+		String oldDesignation = request.getParameter("oldDesignation");
+		String nvxPrix = request.getParameter("nvxPrix");
+		String nvxQtx = request.getParameter("nvxQtx");
+		int newCat = Integer.parseInt(request.getParameter("newCat"));
+		
+		cc.modifierArticle(oldDesignation, nvxDesignation, nvxPrix, nvxQtx, newCat);
+		request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
 		
 	}
 }
