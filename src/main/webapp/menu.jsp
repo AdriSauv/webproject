@@ -7,10 +7,29 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/style.css">
 		<title>Menu</title>
+		<style>
+			body {
+				background-image: url('img/background1.jpg');
+				background-size: cover;
+				background-repeat: no-repeat;
+			}
+			main {
+				padding: 20px;
+			}
+			.btnAcc {
+				display: flex;
+			  	flex-direction: row;
+			  	align-content: center;
+			  	justify-content: space-evenly;
+			  	width: 20%;
+			  	height: auto;
+			  	margin: auto;
+			}
+		</style>
 	</head>
 	<body>
 		<header>
-		<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+		<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
 		  <div class="container-fluid">
 		    <a class="navbar-brand" href="accueil.jsp">Accueil</a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,12 +47,14 @@
 		</nav>
 		</header>
 		<main>
-			<a href="connexion.jsp">
-				<button class="btn btn-outline-secondary">Se connecter</button>
-			</a>
-			<a href="inscription.jsp">
-				<button class="btn btn-outline-secondary">S'inscrire</button>
-			</a>
+			<div class="btnAcc">
+				<a href="connexion.jsp">
+					<button class="btn btn-outline-secondary">Se connecter</button>
+				</a>
+				<a href="inscription.jsp">
+					<button class="btn btn-outline-secondary">S'inscrire</button>
+				</a>
+			</div>
 		</main>
 	</body>
 </html>

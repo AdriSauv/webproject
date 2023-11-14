@@ -10,14 +10,42 @@
 		<title>Modifier Article</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/style.css"/>
+		<style>
+			body {
+				background-image: url('img/background1.jpg');
+				background-size: cover;
+				background-repeat: no-repeat;
+			}
+			main {
+				padding: 20px;
+				color: white;
+			}
+		</style>
 	</head>
 <body>
+<header>
+		<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+		  <div class="container-fluid">
+		    <a class="navbar-brand" href="accueil.jsp">Accueil</a>
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse navbar-collapse" id="navbarColor01">
+		      <ul class="navbar-nav me-auto">
+		        <li class="nav-item">
+		          <a class="nav-link active" href="accueil.jsp">Home
+		          </a>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+		</header>
 	<main>
 		<form action="MyServlet?flag=modifyArticle" method="post">
 			<fieldset>
                 <legend>Modifier Article</legend>
 				<label for="oldDesignation">Désignation :</label>
-				
 				<select name="oldDesignation">
 				<%
 					CreerConnexion cc = new CreerConnexion();
@@ -37,7 +65,6 @@
 				</select>
 				<br>
 				<br>
-				
                 <label for="nvxDesignation">Nouvelle désignation :</label>
 				<input type="text" id="nvxDesignation" name="nvxDesignation" value="">
 				<br>
@@ -73,7 +100,6 @@
 		      	<input type="reset" class="btn btn-outline-danger" value="Reset">
 		      	<a href="menuAdmin.jsp"><input type="button" class="btn btn-primary" value="Annuler"></a>
 				<br>
-				
 			</fieldset>
 		</form>
 	</main>

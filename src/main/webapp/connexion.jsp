@@ -5,26 +5,40 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Connexion</title>
-		<link rel="stylesheet" href="css/bootstrap.min-century.css"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/style.css"/>
+		<style>
+			body {
+				background-image: url('img/background1.jpg');
+				background-size: cover;
+				background-repeat: no-repeat;
+			}
+			main {
+				padding: 20px;
+				color: white;
+			}
+		</style>
 	</head>
 	<body>
-	<% 
-		String login = request.getParameter("pseudo");
-		String pwd = request.getParameter("mdp");
-		if(login == null){login = "";}
-		if(pwd == null){pwd = "";}
-		
-		if(request.getMethod().equals("POST") &&
-				login.equals("admin") &&
-				pwd.equals("admin")){
-	%>
-	<h2>Bienvenue <%= login %></h2>
-	<%
-		}
-		else {
-	%>
-	<div class="mt-5 row">
+	<header>
+		<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+		  <div class="container-fluid">
+		    <a class="navbar-brand" href="accueil.jsp">Accueil</a>
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse navbar-collapse" id="navbarColor01">
+		      <ul class="navbar-nav me-auto">
+		        <li class="nav-item">
+		          <a class="nav-link active" href="accueil.jsp">Home
+		          </a>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+		</header>
+	<div class="mt-4 row">
         <div class="mx-auto col-8 col-md-6 col-lg-4">
 		<form class="form-group" action="MyServlet?flag=connect" method="POST">
 			<fieldset>
@@ -41,15 +55,15 @@
 					<tr>
 						<td></td>
 						<td>
-							<input type="submit" class="btn btn-primary" value="Valider">
+							<input type="submit" class="btn btn-success" value="Valider">
 							<input type="reset" class="btn btn-primary" value="Annuler">
 						</td>
 					</tr>
 				</table>
 			</fieldset>
 		</form>
+		<a href="menu.jsp"><button class="btn btn-danger">Retour</button></a>
 		</div>
 	</div>
-		<% } %>
 	</body>
 </html>

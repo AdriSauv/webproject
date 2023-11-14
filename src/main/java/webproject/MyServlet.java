@@ -175,6 +175,7 @@ public class MyServlet extends HttpServlet {
 	}
 	
 	private void doConnexion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
 		String login = request.getParameter("pseudo");
 		String pwd = request.getParameter("mdp");
 		String pwdBDD = cc.verifierCoordonnees(login);
@@ -182,6 +183,7 @@ public class MyServlet extends HttpServlet {
 			request.getRequestDispatcher("/connectionKO.jsp").forward(request, response);
 		}else {
 			if(pwd.equals(pwdBDD)) {
+				request.setAttribute("login", login);
 				request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/connectionKO.jsp").forward(request, response);
