@@ -51,6 +51,6 @@ public class Compte {
 	public int getIdCompte() {
 		return idCompte;
 	}
-
+	
 	
 }

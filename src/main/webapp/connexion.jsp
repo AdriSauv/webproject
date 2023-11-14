@@ -38,32 +38,32 @@
 		  </div>
 		</nav>
 		</header>
-	<div class="mt-4 row">
-        <div class="mx-auto col-8 col-md-6 col-lg-4">
-		<form class="form-group" action="MyServlet?flag=connect" method="POST">
-			<fieldset>
-				<!-- <legend>Se connecter</legend> -->
-				<table>
-					<tr>
-						<td><label for="pseudo">Nom d'utilisateur</label></td>
-						<td><input class="form-control username" type="text" id="pseudo" name="pseudo"></td>
-					</tr>
-					<tr>
-						<td><label>Mot de passe</label></td>
-						<td><input class="form-control password" type="password" id="mdp" name="mdp"></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<input type="submit" class="btn btn-success" value="Valider">
-							<input type="reset" class="btn btn-primary" value="Annuler">
-						</td>
-					</tr>
-				</table>
-			</fieldset>
-		</form>
-		<a href="menu.jsp"><button class="btn btn-danger">Retour</button></a>
+		<div class="mt-4 row">
+	        <div class="mx-auto col-8 col-md-6 col-lg-4">
+			<form class="form-group" action="MyServlet?flag=connect" method="POST">
+				<fieldset>
+					<!-- <legend>Se connecter</legend> -->
+					<table>
+						<tr>
+							<td><label for="pseudo">Nom d'utilisateur</label></td>
+							<td><input class="form-control username" type="text" id="pseudo" name="pseudo"></td>
+						</tr>
+						<tr>
+							<td><label>Mot de passe</label></td>
+							<td><input class="form-control password" type="password" id="mdp" name="mdp"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type="submit" class="btn btn-success" value="Valider">
+								<input type="reset" class="btn btn-primary" value="Annuler">
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			</form>
+			<a href="menu.jsp"><button class="btn btn-danger">Retour</button></a>
+			</div>
 		</div>
-	</div>
 	</body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,8 +15,8 @@
 				background-repeat: no-repeat;
 			}
 			main {
-			
 				padding: 20px;
+				height: 100vh;
 			}
 			.btn-group {
 				display: flex;
@@ -33,7 +34,7 @@
 		<header>
 		<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
 		  <div class="container-fluid">
-		    <a class="navbar-brand" href="accueil.jsp">${login}</a>
+		    <a class="navbar-brand">${login}</a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 		      <span class="navbar-toggler-icon"></span>
 		    </button>
@@ -42,8 +43,11 @@
 		        <li class="nav-item">
 		          <a class="nav-link active" href="menuAdmin.jsp">Home</a>
 		        </li>
+		        <li class="nav-item">
+		          <a href="monCompte.jsp"><button class="nav-link" type="submit" action="MyServlet?flag=myAccount">MON COMPTE</button></a>
+		        </li>
 		        <li>
-		          <a class="nav-link" href="accueil.jsp">Se déconnecter</a>
+		          <a class="nav-link" href="logout.jsp">Se déconnecter</a>
 		        </li>
 		      </ul>
 		    </div>

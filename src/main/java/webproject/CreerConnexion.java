@@ -47,6 +47,31 @@ public class CreerConnexion {
 		}
 		return mdp;
 	}
+	public Compte verifierCoordonnees(String login, String pwd) {
+        Compte compte = null;
+        etablirConnexion();
+
+        try {
+            String sql = "SELECT * FROM compte WHERE login=? AND pwd=?";
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setString(1, login);
+            ps.setString(2, pwd);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String type = rs.getString("type");
+                int idUsers = rs.getInt("idUsers");
+                compte = new Compte(login, pwd, idUsers);
+                compte.setType(type);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        } finally {
+            cloturerConnexion();
+        }
+
+        return compte;
+    }
 	public void ajouterCompte(Compte cp) throws SQLException {
 		etablirConnexion();
 		/*

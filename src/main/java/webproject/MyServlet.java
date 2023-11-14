@@ -29,8 +29,17 @@ public class MyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+		if (session != null) {
+			Compte currentCompte = (Compte) session.getAttribute("currentCompte");
+			if(currentCompte!= null) {
+				session.setAttribute("username", currentCompte.getLogin());
+				session.setAttribute("password", "*********");
+				request.getRequestDispatcher("/monCompte.jsp").forward(request, response);
+				return;
+			}
+		}
+		response.sendRedirect("/connexion.jsp");
 	}
 
 	/**
@@ -175,21 +184,32 @@ public class MyServlet extends HttpServlet {
 	}
 	
 	private void doConnexion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
-		String login = request.getParameter("pseudo");
-		String pwd = request.getParameter("mdp");
-		String pwdBDD = cc.verifierCoordonnees(login);
-		if(pwdBDD == null) {
-			request.getRequestDispatcher("/connectionKO.jsp").forward(request, response);
-		}else {
-			if(pwd.equals(pwdBDD)) {
-				request.setAttribute("login", login);
-				request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
-			}else {
-				request.getRequestDispatcher("/connectionKO.jsp").forward(request, response);
-			}
-		}
+	    HttpSession session = request.getSession(true);
+	    String login = request.getParameter("pseudo");
+	    String pwd = request.getParameter("mdp");
+
+	    // Assuming cc is an instance of the class where ajouterCompte method is defined
+	    Compte compte = cc.verifierCoordonnees(login, pwd);
+
+	    if(compte == null) {
+	        request.getRequestDispatcher("/connectionKO.jsp").forward(request, response);
+	    } else {
+	        if("a".equals(compte.getType())) {
+	            // Redirect to admin page
+	        	session.setAttribute("login", login);
+	        	session.setAttribute("currentCompte", compte);
+	            request.getRequestDispatcher("/menuAdmin.jsp").forward(request, response);
+	        } else if("s".equals(compte.getType())) {
+	            // Redirect to simple user page
+	        	session.setAttribute("login", login);
+	            request.getRequestDispatcher("/menuSimpleUser.jsp").forward(request, response);
+	        } else {
+	            // Handle other account types if needed
+	            request.getRequestDispatcher("/connectionKO.jsp").forward(request, response);
+	        }
+	    }
 	}
+
 
 	private void doDeleteCategorie(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
