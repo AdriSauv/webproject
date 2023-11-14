@@ -29,17 +29,7 @@ public class MyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		if (session != null) {
-			Compte currentCompte = (Compte) session.getAttribute("currentCompte");
-			if(currentCompte!= null) {
-				session.setAttribute("username", currentCompte.getLogin());
-				session.setAttribute("password", "*********");
-				request.getRequestDispatcher("/monCompte.jsp").forward(request, response);
-				return;
-			}
-		}
-		response.sendRedirect("/connexion.jsp");
+		
 	}
 
 	/**

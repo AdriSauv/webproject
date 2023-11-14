@@ -8,11 +8,13 @@
 		<meta charset="ISO-8859-1">
 		<link rel="stylesheet" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/style.css"/>
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 		<script src="js/bootstrap.bundle.min.js"></script>
+		
 		<style>
 			body {
 				background-image: url('img/background1.jpg');
-				background-size: cover;
+				/* background-size: cover; */
 				background-repeat: no-repeat;
 				color: white;
 			}
@@ -37,6 +39,9 @@
 				text-decoration: underline;
 				color: white;
 			}
+			#modal {
+				display: none;
+			}
 		</style>
 		<title>Mon Compte</title>
 	</head>
@@ -57,7 +62,7 @@
 			          <a class="nav-link active" href="monCompte.jsp">Mon Compte</a>
 			        </li>
 			        <li>
-			          <a class="nav-link" href="accueil.jsp" id="disconnect">Se déconnecter</a>
+			          <a class="nav-link" href="logout.jsp" id="disconnect">Se déconnecter</a>
 			        </li>
 			      </ul>
 			    </div>
@@ -71,14 +76,44 @@
 	            	Compte loggedInUser = (Compte) session.getAttribute("loggedInUser");
 	            	String username = (loggedInUser != null) ? loggedInUser.getLogin() : "";
 	            %>
-	                <label for="pseudo">Nom d'utilisateur : ${login}</label>
-	                <a href="changerPseudo.jsp">changer le nom d'utilisateur</a>
+	                <p>Nom d'utilisateur : ${login}</p>
+	                <a type="button" id="changeUsernameLink" data-target="#modal" style="text-decoration: underline;">changer le nom d'utilisateur</a>
 	            </div>
+	            <br>
+	            <br>
 	            <div class="container-pwd">
-	                <label for="pwd">Mot de passe : ******</label>
-	                <a href="changerPwd.jsp">changer le mot de passe</a>
+	                <p>Mot de passe : ******</p>
+	                <a href="" id="pwd">changer le mot de passe</a>
 	            </div>
 	        </div>
+			<div class="modal" id="modal">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title">Changement du Nom d'utilisateur</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true"></span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			        	<fieldset>
+			        		
+			        	</fieldset>
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-primary">Save changes</button>
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
     	</main>
 	</body>
+	<script>
+			document.getElementById("changeUsernameLink").addEventListener("click", function() {
+				$('#modal').modal('show');
+			});
+		</script>
 </html>

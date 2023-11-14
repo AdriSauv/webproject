@@ -11,7 +11,7 @@
 		<style>
 			body {
 				background-image: url('img/background1.jpg');
-				background-size: cover;
+				/* background-size: cover; */
 				background-repeat: no-repeat;
 			}
 			main {
@@ -44,7 +44,7 @@
 		          <a class="nav-link active" href="menuAdmin.jsp">Home</a>
 		        </li>
 		        <li class="nav-item">
-		          <a href="monCompte.jsp"><button class="nav-link" type="submit" action="MyServlet?flag=myAccount">MON COMPTE</button></a>
+		          <a href="monCompte.jsp"><button class="nav-link">MON COMPTE</button></a>
 		        </li>
 		        <li>
 		          <a class="nav-link" href="logout.jsp">Se déconnecter</a>

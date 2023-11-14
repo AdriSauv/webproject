@@ -11,7 +11,7 @@
 		<style>
 			body {
 				background-image: url('img/background1.jpg');
-				background-size: cover;
+				/* background-size: cover; */
 				background-repeat: no-repeat;
 			}
 			form {
