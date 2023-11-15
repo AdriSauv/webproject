@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="webproject.Compte" %>
 <%@ page import="java.util.*" %>
+<%@ taglib uri="http://adrien.fr/tag" prefix="custom" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,7 +12,6 @@
 		<link rel="stylesheet" href="css/style.css"/>
 		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 		<script src="js/bootstrap.bundle.min.js"></script>
-		
 		<style>
 			body {
 				background-image: url('img/background1.jpg');
@@ -77,20 +78,39 @@
 	            	String username = (loggedInUser != null) ? loggedInUser.getLogin() : "";
 	            %>
 	                <p>Nom d'utilisateur : ${login}</p>
-	                <a type="button" id="changeUsernameLink" data-target="#modal" style="text-decoration: underline;">changer le nom d'utilisateur</a>
+	                <a type="button" id="changeUsernameLink" data-target="#modal1" style="text-decoration: underline;">changer le nom d'utilisateur</a>
 	            </div>
 	            <br>
 	            <br>
 	            <div class="container-pwd">
 	                <p>Mot de passe : ******</p>
-	                <a href="" id="pwd">changer le mot de passe</a>
+	                <a type="button" id="changePwdLink" data-target="#modal2" style="text-decoration: underline;">changer le mot de passe</a>
 	            </div>
 	        </div>
-			<div class="modal" id="modal">
+			<div class="modal" id="modal1">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <h5 class="modal-title">Changement du Nom d'utilisateur</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true"></span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <custom:Login username="" password="" action="MyServlet?flag=connect" />
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-primary">Save changes</button>
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<div class="modal" id="modal2">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title">Changement du mot de passe</h5>
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true"></span>
 			        </button>
@@ -112,8 +132,11 @@
     	</main>
 	</body>
 	<script>
-			document.getElementById("changeUsernameLink").addEventListener("click", function() {
-				$('#modal').modal('show');
-			});
-		</script>
+		document.getElementById("changeUsernameLink").addEventListener("click", function() {
+			$('#modal1').modal('show');
+		});
+		document.getElementById("changePwdLink").addEventListener("click", function() {
+			$('#modal2').modal('show');
+		});
+	</script>
 </html>

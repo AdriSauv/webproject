@@ -16,8 +16,8 @@ public class CreerConnexion {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			cn = DriverManager.getConnection(
-					"jdbc:mysql://127.0.0.1/prjcommerce","xyz","xyz");
-			//System.out.println("Bravo!!! connexion réussie");
+					"jdbc:mysql://127.0.0.1/lebeauvelo","xyz","xyz");
+			System.out.println("Bravo!!! connexion réussie");
 			st = cn.createStatement();
 		}catch(ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
